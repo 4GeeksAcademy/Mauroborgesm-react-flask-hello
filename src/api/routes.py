@@ -47,3 +47,14 @@ def favorite_planet_create(element, element_id):
     db.session.add(new_Favorite)
     db.session.commit()
     return jsonify({"msg": "Favorite created"}), 201
+
+@api.route('/favorites/<string:element>/<int:element_id>', methods=['DELETE'])
+def favorite_planet_delete(element, element_id):
+    user_id=request.get_json()["user_id"]
+    new_Favorite=Favorites.quey.filter_by(type=element, element_id=element_id, user_id=user_id).first()
+    if(favorite is None):
+        return jsonify({"msg": "Favorite not found"}), 404
+
+    db.session.delete(Favorite)
+    db.session.commit()
+    return jsonify({"msg": "Favorite created"}), 201
